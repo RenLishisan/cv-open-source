@@ -117,39 +117,74 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"main.js":[function(require,module,exports) {
-var html = document.querySelector("#html");
-var style = document.querySelector("#style");
-var string = "/*\u4F60\u597D!\u6211\u662F\u4E00\u540D\u524D\u7AEF\u5DE5\u7A0B\u5E08!\n*\u63A5\u4E0B\u6765\u6211\u5C06\u5C55\u793A\u4E00\u4E0B\u6211\u7684\u524D\u7AEF\u529F\u5E95\u3002\n*\u6B63\u5728\u63A5\u5165\u6697\u7F51\u7CFB\u7EDF.............100% \u7CFB\u7EDF\u63A5\u5165\u6210\u529F\uFF01\n*\u542F\u52A8\u56FD\u9645\u4E92\u8054\u7F51\u8FDE\u63A5..............100% \u56FD\u9645\u4E92\u8054\u7F51\u8FDE\u63A5\u6210\u529F\uFF01\n*\u5F00\u59CB\u52A0\u8F7D\u521D\u59CB\u5316\u6837\u5F0F\n**/\n#div1{\n  border: 1px solid red;\n  width: 200px;\n  height: 200px;\n}\n/*\n*\u521D\u59CB\u5316\u6837\u5F0F\u52A0\u8F7D\u6210\u529F\uFF01\n*\u5F00\u59CB\u4E0E\u6C5F\u6E56\u5404\u5927\u95E8\u6D3E\u5EFA\u7ACB\u8FDE\uFF01\n**/\n#div1{\n  border-radius: 50%;\n  box-shadow: 0 0 3px rgba(0,0,0,0.5);\n  border: none;\n}\n/*\n*\u6B63\u5728\u8BF7\u6C42\u592A\u6781\u957F\u8001\n**/\n#div1{\n  background: linear-gradient(90deg, rgba(255,255,255,1)\n  0%, rgba(255,255,255,1) 50%, rgba(0,0,0,1) 50%,\n  rgba(0,0,0,1) 100%);\n}\n#div1::before{\n  width: 100px;\n  height: 100px;\n  top: 0;\n  left: 50%;\n  transform:translateX(-50%);\n  background: #000;\n  border-radius: 50%;\n  background: radial-gradient(circle, rgba(255,255,255,1) 0%, \n  rgba(255,255,255,1) 25%, rgba(0,0,0,1) 25%,\n  rgba(0,0,0,1) 100%);\n}\n#div1::after{\n  width: 100px;\n  height: 100px;\n  bottom: 0;\n  left: 50%;\n  transform:translateX(-50%);\n  background: #fff;\n  border-radius: 50%;\n  background: radial-gradient(circle, rgba(0,0,0,1) 0%,\n   rgba(0,0,0,1) 25%, rgba(255,255,255,1) 25%,\n   rgba(255,255,255,1) 100%);\n}\n";
-var string2 = "";
-var n = 0;
+})({"C:/Users/rensh/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
 
-var step = function step() {
-  setTimeout(function () {
-    if (string[n] === "\n") {
-      string2 += "<br>";
-    } else if (string[n] === " ") {
-      string2 += "&nbsp;";
-    } else {
-      string2 += string[n];
-    } //如果是回车，就不照搬。如果不是回车，就照搬。
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
 
+  return bundleURL;
+}
 
-    html.innerHTML = string2;
-    style.innerHTML = string.substring(0, n);
-    window.scrollTo(0, 99999);
-    html.scrollTo(0, 99999);
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
 
-    if (n < string.length - 1) {
-      //如果n不是最后一个，就继续。
-      n += 1;
-      step();
+    if (matches) {
+      return getBaseURL(matches[0]);
     }
-  }, 50);
-};
+  }
 
-step();
-},{}],"C:/Users/rensh/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"C:/Users/rensh/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"C:/Users/rensh/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/bundle-url.js"}],"C:/Users/rensh/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -353,5 +388,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["C:/Users/rensh/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js","main.js"], null)
-//# sourceMappingURL=/main.1f19ae8e.js.map
+},{}]},{},["C:/Users/rensh/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/index.js.map

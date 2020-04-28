@@ -1,4 +1,4 @@
-let html = document.querySelector("#demo");
+let html = document.querySelector("#html");
 let style = document.querySelector("#style");
 let string = `/*你好!我是一名前端工程师!
 *接下来我将展示一下我的前端功底。
@@ -8,8 +8,8 @@ let string = `/*你好!我是一名前端工程师!
 **/
 #div1{
   border: 1px solid red;
-  width: 400px;
-  height: 400px;
+  width: 200px;
+  height: 200px;
 }
 /*
 *初始化样式加载成功！
@@ -29,8 +29,8 @@ let string = `/*你好!我是一名前端工程师!
   rgba(0,0,0,1) 100%);
 }
 #div1::before{
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   top: 0;
   left: 50%;
   transform:translateX(-50%);
@@ -41,8 +41,8 @@ let string = `/*你好!我是一名前端工程师!
   rgba(0,0,0,1) 100%);
 }
 #div1::after{
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   bottom: 0;
   left: 50%;
   transform:translateX(-50%);
@@ -67,11 +67,13 @@ let step = () => {
     //如果是回车，就不照搬。如果不是回车，就照搬。
     html.innerHTML = string2;
     style.innerHTML = string.substring(0, n);
+    window.scrollTo(0, 99999);
+    html.scrollTo(0, 99999);
     if (n < string.length - 1) {
       //如果n不是最后一个，就继续。
       n += 1;
       step();
     }
-  }, 0.1);
+  }, 50);
 };
 step();
